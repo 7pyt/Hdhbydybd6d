@@ -34,22 +34,40 @@
       background: white;
       border-radius: 3px;
     }
+
+    /* Menu mobile (fermé par défaut) */
     .menu-mobile {
-      display: none;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      height: 100vh;
+      width: 250px;
+      background: rgba(10, 10, 25, 0.95);
+      display: flex;
       flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background: rgba(0, 0, 0, 0.9);
-      padding: 15px;
-      border-radius: 10px;
-      gap: 15px;
-      z-index: 1000;
+      align-items: flex-start;
+      padding: 80px 20px;
+      gap: 20px;
+      transition: right 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+      z-index: 999;
+    }
+    .menu-mobile.open {
+      right: 0;
+      opacity: 1;
     }
     .menu-mobile a {
       color: white;
       text-decoration: none;
       font-weight: bold;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background 0.3s, transform 0.2s;
+      width: 100%;
+    }
+    .menu-mobile a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
     }
 
     /* Responsive */
@@ -68,9 +86,11 @@
   <header class="navbar">
     <div class="logo">🤖 Pinpinos Bot</div>
     <nav class="menu">
+      <a href="https://pinpinos.com">🏠 Accueil</a>
       <a href="#features">⚡ Fonctionnalités</a>
       <a href="#team">👥 Équipe</a>
       <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">Ajouter à Discord</a>
+      <a class="btn" href="https://discord.gg/6bcUF9N2hy" target="_blank">💬 Support Bot</a>
     </nav>
     <div class="burger" id="burger">
       <span></span>
@@ -78,9 +98,11 @@
       <span></span>
     </div>
     <nav class="menu-mobile" id="menu-mobile">
+      <a href="https://pinpinos.com">🏠 Accueil</a>
       <a href="#features">⚡ Fonctionnalités</a>
       <a href="#team">👥 Équipe</a>
-      <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">Ajouter à Discord</a>
+      <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">🚀 Ajouter à Discord</a>
+      <a class="btn" href="https://discord.gg/6bcUF9N2hy" target="_blank">💬 Support Bot</a>
     </nav>
   </header>
 
@@ -148,14 +170,13 @@
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
 
-    // Menu burger
+    // Menu burger avec animation
     const burger = document.getElementById('burger');
     const menuMobile = document.getElementById('menu-mobile');
     burger.addEventListener('click', () => {
-      menuMobile.style.display = menuMobile.style.display === 'flex' ? 'none' : 'flex';
+      menuMobile.classList.toggle('open');
     });
   </script>
 </body>
