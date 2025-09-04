@@ -214,14 +214,14 @@
       });
     });
 
-    // Fond animé particules
+    // Fond animé particules sur toute la page
     const canvas = document.getElementById("particles");
     const ctx = canvas.getContext("2d");
     let particles = [];
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.height = document.body.scrollHeight; // toute la hauteur du site
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
@@ -250,7 +250,7 @@
 
     function initParticles() {
       particles = [];
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 150; i++) {
         particles.push(new Particle());
       }
     }
