@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pinpinos Bot</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Animations de base */
+    .hidden {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease-out;
+    }
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation -->
@@ -13,12 +25,12 @@
     <nav class="menu">
       <a href="#features">⚡ Fonctionnalités</a>
       <a href="#team">👥 Équipe</a>
-      <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183" target="_blank">Ajouter à Discord</a>
+      <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">Ajouter à Discord</a>
     </nav>
   </header>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero hidden">
     <h1>Le Bot IA qui obéit à vos commandes ✨</h1>
     <p>
       Pinpinos Bot est un compagnon intelligent conçu pour <span class="highlight">transformer votre serveur Discord</span> ⚡.
@@ -26,24 +38,24 @@
       <br><br>
       Modération, jeux, animations, discussions… Pinpinos devient votre <span class="highlight">assistant virtuel 24/7</span> 🚀.
     </p>
-    <a class="btn big" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183" target="_blank">🚀 Ajouter Pinpinos à votre serveur</a>
+    <a class="btn big" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">🚀 Ajouter Pinpinos à votre serveur</a>
   </section>
 
   <!-- Features -->
-  <section id="features" class="features">
+  <section id="features" class="features hidden">
     <h2>⚡ Fonctionnalités principales</h2>
     <div class="cards">
-      <div class="card">
+      <div class="card hidden">
         <div class="emoji">🤖</div>
         <h3>IA conversationnelle</h3>
         <p>Discutez librement avec Pinpinos comme avec un ami virtuel. Réponses rapides, fun et utiles.</p>
       </div>
-      <div class="card">
+      <div class="card hidden">
         <div class="emoji">⚙️</div>
         <h3>Automatisation</h3>
         <p>Modération, gestion des rôles, rappels automatiques et plus encore.</p>
       </div>
-      <div class="card">
+      <div class="card hidden">
         <div class="emoji">🎉</div>
         <h3>Animations et jeux</h3>
         <p>Lancez des mini-jeux interactifs, des quizz ou des animations pour animer vos soirées Discord.</p>
@@ -52,14 +64,14 @@
   </section>
 
   <!-- Team -->
-  <section id="team" class="team">
+  <section id="team" class="team hidden">
     <h2>👥 Équipe</h2>
     <div class="cards">
-      <div class="card">
+      <div class="card hidden">
         <h3>Fondateur</h3>
         <p>l9k_fn</p>
       </div>
-      <div class="card">
+      <div class="card hidden">
         <h3>Website Designer</h3>
         <p>kitsu_js</p>
       </div>
@@ -67,8 +79,22 @@
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="hidden">
     © 2025 Pinpinos Bot — Fait avec ❤️ pour la communauté Discord
   </footer>
+
+  <script>
+    // Intersection Observer pour les animations au scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
