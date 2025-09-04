@@ -6,7 +6,18 @@
   <title>Pinpinos Bot</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Animations */
+    /* Fond animé */
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0f0f2d, #1a0033, #000);
+    }
+
+    /* Animations scroll */
     .hidden {
       opacity: 0;
       transform: translateY(40px);
@@ -27,15 +38,26 @@
       flex-direction: column;
       cursor: pointer;
       gap: 5px;
+      z-index: 1001;
     }
     .burger span {
       width: 25px;
       height: 3px;
       background: white;
       border-radius: 3px;
+      transition: all 0.3s;
+    }
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
     }
 
-    /* Menu mobile (fermé par défaut) */
+    /* Menu mobile */
     .menu-mobile {
       position: fixed;
       top: 0;
@@ -50,7 +72,7 @@
       gap: 20px;
       transition: right 0.4s ease, opacity 0.4s ease;
       opacity: 0;
-      z-index: 999;
+      z-index: 1000;
     }
     .menu-mobile.open {
       right: 0;
@@ -82,11 +104,14 @@
   </style>
 </head>
 <body>
+  <!-- Canvas fond animé -->
+  <canvas id="particles"></canvas>
+
   <!-- Navigation -->
   <header class="navbar">
     <div class="logo">🤖 Pinpinos Bot</div>
     <nav class="menu">
-      <a href="https://pinpinos.com">🏠 Accueil</a>
+      <a href="https://hdhbydybd6dh.onrender.com">🏠 Accueil</a>
       <a href="#features">⚡ Fonctionnalités</a>
       <a href="#team">👥 Équipe</a>
       <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">Ajouter à Discord</a>
@@ -98,7 +123,7 @@
       <span></span>
     </div>
     <nav class="menu-mobile" id="menu-mobile">
-      <a href="https://pinpinos.com">🏠 Accueil</a>
+      <a href="https://hdhbydybd6dh.onrender.com">🏠 Accueil</a>
       <a href="#features">⚡ Fonctionnalités</a>
       <a href="#team">👥 Équipe</a>
       <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">🚀 Ajouter à Discord</a>
@@ -172,12 +197,75 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
 
-    // Menu burger avec animation
+    // Menu burger
     const burger = document.getElementById('burger');
     const menuMobile = document.getElementById('menu-mobile');
+    const links = menuMobile.querySelectorAll('a');
+
     burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
       menuMobile.classList.toggle('open');
     });
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('active');
+        menuMobile.classList.remove('open');
+      });
+    });
+
+    // Fond animé particules
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
   </script>
 </body>
 </html>
