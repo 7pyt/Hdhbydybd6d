@@ -1,0 +1,139 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+
+export default function DiscordBotSite() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-black text-white">
+      {/* Navigation */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold tracking-wide">🤖 Pinpinos Bot</h1>
+          <div className="flex items-center gap-4">
+            <Button
+              className="rounded-xl bg-indigo-600 hover:bg-indigo-700"
+              asChild
+            >
+              <a href="https://discord.com/oauth2/authorize?client_id=1411441141219459183" target="_blank">
+                Ajouter à Discord
+              </a>
+            </Button>
+            <button
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+        {menuOpen && (
+          <nav className="bg-black/80 border-t border-white/10 px-6 py-4 animate-fade-in">
+            <ul className="flex flex-col gap-3 text-lg">
+              <li>
+                <a href="#features" className="hover:text-indigo-400">⚡ Fonctionnalités</a>
+              </li>
+              <li>
+                <a href="#team" className="hover:text-indigo-400">👥 Équipe</a>
+              </li>
+            </ul>
+          </nav>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative z-10 pt-40 pb-28 px-6 text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent"
+        >
+          Le Bot IA qui obéit à vos commandes ✨
+        </motion.h2>
+        <p className="mt-6 max-w-3xl mx-auto text-neutral-300 text-lg leading-relaxed">
+          Pinpinos Bot est un compagnon intelligent conçu pour <span className="text-indigo-400 font-semibold">transformer votre serveur Discord</span> ⚡. 
+          Grâce à son IA avancée, il comprend ce que vous lui demandez et l’exécute avec précision 🧠💡.
+          Besoin de gérer vos membres, d’automatiser vos tâches, ou même de discuter avec une IA sympathique ?
+          Pinpinos est là pour tout faire 🚀.
+          <br /><br />
+          Il ne s’agit pas seulement d’un simple bot, mais d’un <span className="text-fuchsia-400 font-bold">véritable assistant virtuel</span>,
+          prêt à interagir avec vos communautés 24/7 🌙✨.
+        </p>
+        <div className="mt-10">
+          <Button
+            size="lg"
+            className="rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-90"
+            asChild
+          >
+            <a href="https://discord.com/oauth2/authorize?client_id=1411441141219459183" target="_blank">
+              🚀 Ajouter Pinpinos à votre serveur
+            </a>
+          </Button>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="relative z-10 px-6 py-20 bg-black/40 border-t border-white/10">
+        <h3 className="text-3xl font-bold text-center mb-12">⚡ Fonctionnalités principales</h3>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
+          <FeatureCard
+            emoji="🤖"
+            title="IA conversationnelle"
+            text="Discutez librement avec Pinpinos comme avec un ami virtuel. Réponses rapides, fun et utiles."
+          />
+          <FeatureCard
+            emoji="⚙️"
+            title="Automatisation"
+            text="Modération, gestion des rôles, rappels automatiques et plus encore."
+          />
+          <FeatureCard
+            emoji="🎉"
+            title="Animations et jeux"
+            text="Lancez des mini-jeux interactifs, des quizz ou des animations pour animer vos soirées Discord."
+          />
+        </div>
+      </section>
+
+      {/* Team */}
+      <section id="team" className="relative z-10 px-6 py-20 bg-gradient-to-br from-indigo-950 via-purple-900 to-black border-t border-white/10">
+        <h3 className="text-3xl font-bold text-center mb-12">👥 Équipe</h3>
+        <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-8 text-center">
+          <TeamCard role="Fondateur" name="l9k_fn" />
+          <TeamCard role="Website Designer" name="kitsu_js" />
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 bg-black/40 py-8 text-center text-neutral-400 text-sm">
+        © {new Date().getFullYear()} Pinpinos Bot — Fait avec ❤️ pour la communauté Discord
+      </footer>
+    </div>
+  );
+}
+
+function FeatureCard({ emoji, title, text }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="rounded-2xl bg-white/5 border border-white/10 p-6 shadow-lg hover:shadow-indigo-500/30 transition"
+    >
+      <div className="text-3xl mb-3">{emoji}</div>
+      <h4 className="text-xl font-semibold mb-2">{title}</h4>
+      <p className="text-neutral-300 text-sm">{text}</p>
+    </motion.div>
+  );
+}
+
+function TeamCard({ role, name }) {
+  return (
+    <div className="rounded-2xl bg-white/5 border border-white/10 p-6">
+      <h5 className="text-lg font-bold">{role}</h5>
+      <p className="text-neutral-300">{name}</p>
+    </div>
+  );
+}
