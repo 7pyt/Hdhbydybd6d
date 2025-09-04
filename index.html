@@ -6,7 +6,7 @@
   <title>Pinpinos Bot</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Animations de base */
+    /* Animations */
     .hidden {
       opacity: 0;
       transform: translateY(40px);
@@ -16,6 +16,51 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Menu burger */
+    .menu {
+      display: flex;
+      gap: 20px;
+    }
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .burger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 3px;
+    }
+    .menu-mobile {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 15px;
+      border-radius: 10px;
+      gap: 15px;
+      z-index: 1000;
+    }
+    .menu-mobile a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      .menu {
+        display: none;
+      }
+      .burger {
+        display: flex;
+      }
+    }
   </style>
 </head>
 <body>
@@ -23,6 +68,16 @@
   <header class="navbar">
     <div class="logo">🤖 Pinpinos Bot</div>
     <nav class="menu">
+      <a href="#features">⚡ Fonctionnalités</a>
+      <a href="#team">👥 Équipe</a>
+      <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">Ajouter à Discord</a>
+    </nav>
+    <div class="burger" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav class="menu-mobile" id="menu-mobile">
       <a href="#features">⚡ Fonctionnalités</a>
       <a href="#team">👥 Équipe</a>
       <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1411441141219459183&permissions=8&integration_type=0&scope=bot" target="_blank">Ajouter à Discord</a>
@@ -84,7 +139,7 @@
   </footer>
 
   <script>
-    // Intersection Observer pour les animations au scroll
+    // Animation scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -95,6 +150,13 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+
+    // Menu burger
+    const burger = document.getElementById('burger');
+    const menuMobile = document.getElementById('menu-mobile');
+    burger.addEventListener('click', () => {
+      menuMobile.style.display = menuMobile.style.display === 'flex' ? 'none' : 'flex';
+    });
   </script>
 </body>
 </html>
